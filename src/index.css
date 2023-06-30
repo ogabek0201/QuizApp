@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-menu-item-selected{
+    background-color: #8692A6!important;
+    color: white!important;
+}
+
+.ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+    border-color: #FFA822;
+    background-color: #FFA822;
+}
+
+
+
+
