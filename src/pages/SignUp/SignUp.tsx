@@ -1,28 +1,27 @@
 import {Link, useNavigate} from "react-router-dom";
-import www from '../../assets/www.png'
+import www from "../../assets/www.png";
 import {useForm} from "react-hook-form";
-import {axiosLogin, saveToken} from "../../utils/axiosRequest.ts";
+import {axiosLogin} from "../../utils/axiosRequest.ts";
 
-const Login = () => {
+const SignUp = () => {
     const navigate = useNavigate()
 
-    interface loginForm {
+    interface registerForm {
+        fullName: string,
+        role_id: number,
         email: string,
-        password: string | number,
-        remember: boolean
+        password: string | number
     }
 
-    const {handleSubmit, register} = useForm<loginForm>()
+    const {register, handleSubmit} = useForm<registerForm>()
 
-    // const onSubmit: SubmitHandler<loginForm> = (data) => console.log(data)
-    async function onSubmit(data: loginForm) {
-        const {remember, ...signIn} = data
+    async function onSubmit(datas: registerForm) {
+        datas.role_id = 2
         try {
-            const {data} = await axiosLogin.post("login", signIn);
-            saveToken(data.accessToken, remember, data.user);
-            navigate("/dashboard");
-        } catch (error) {
-            console.error(error);
+            const {data} = await axiosLogin.post('register', datas)
+            navigate('/login')
+        } catch (e) {
+            console.log(e)
         }
     }
 
@@ -39,44 +38,48 @@ const Login = () => {
                         <form className="flex flex-col relative" onSubmit={handleSubmit(onSubmit)}>
                             <label
                                 className="absolute top-2 left-4 text-[15px] font-normal text-[#0000009C]"
-                                htmlFor="email"
+                                htmlFor="fullname"
                             >
-                                Email Address
+                                Full Name
                             </label>
+                            <input
+                                type="text"
+                                id="fullname"
+                                className="border border-[#C1BBBB] pt-8 pb-1 px-4 font-medium text-[#FCC822] text-[16px] w-[345px] outline-0"
+                                {...register('fullName',)}
+                            /><label
+                            className="absolute top-[70px] left-4 text-[15px] font-normal text-[#0000009C]"
+                            htmlFor="email"
+                        >
+                            Email Address
+                        </label>
                             <input
                                 type="email"
                                 id="email"
                                 className="border border-[#C1BBBB] pt-8 pb-1 px-4 font-medium text-[#FCC822] text-[16px] w-[345px] outline-0"
-
-                                {...register('email')}
+                                {...register('email',)}
                             />
                             <label
                                 htmlFor="password"
-                                className="absolute top-[70px] left-4  text-[15px] font-normal text-[#0000009C]"
+                                className="absolute top-[130px] left-4  text-[15px] font-normal text-[#0000009C]"
                             >
                                 Password
                             </label>
                             <input
                                 type="password"
                                 className="border border-[#C1BBBB] pt-8 pb-1 px-4 font-medium text-[#FCC822] text-[16px] w-[345px] outline-0"
-                                {...register('password')}
+                                {...register('password',)}
                                 id="password"
                             />
-                            <div className="flex gap-1 mt-5">
-                                <input type="checkbox" {...register('remember')} id="rem"/>
-                                <label htmlFor="rem" className="text-[#0000009C] text-[16px]">
-                                    Remember Me
-                                </label>
-                            </div>
                             <div className="flex mt-12 gap-8">
                                 <button type="submit"
-                                        className="text-[18px] font-medium py-2 px-4 bg-gradient-to-r from-[#01FF88] to-[#40F4D7] text-white shadow-lg shadow-[#40F4D7]">Login
+                                        className="text-[18px] font-medium py-2 px-4 bg-gradient-to-r from-[#01FF88] to-[#40F4D7] text-white shadow-lg shadow-[#40F4D7]">SignUp
                                 </button>
                                 <Link
-                                    to="/signup"
+                                    to="/login"
                                     className="ml-4 text-[#06FE8E] font-medium text-[18px] px-5 py-2 border border-[#31F7C4]"
                                 >
-                                    Signup
+                                    Login
                                 </Link>
                             </div>
                         </form>
@@ -96,4 +99,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;

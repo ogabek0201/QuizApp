@@ -14,11 +14,10 @@ const Layout = () => {
                         </div>
                     </Link>
                     <div className="flex gap-12 text-2xl items-center text-[#E0E0E0]">
-                        <Link to="/">How it works?</Link>
-                        <Link to="/">Features</Link>
-                        <Link to="/">About us</Link>
                         <Link to="/login"
                               className="ml-8 py-3 px-8 border-2 border-[#31F7C4] text-[#06FE8E] font-medium">Login</Link>
+                        <Link to="/signup"
+                              className="ml-8 py-3 px-8 border-2 border-[#31F7C4] text-[#06FE8E] font-medium">SignUp</Link>
                     </div>
                 </div>
                 <Outlet/>

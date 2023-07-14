@@ -1,9 +1,17 @@
 import logo from '../assets/www.png'
 import profile from '../assets/aaa.png'
 import {Button, Image, Input, Menu} from "antd";
-import {BlockOutlined, CodeSandboxOutlined, LogoutOutlined, RestOutlined, SearchOutlined} from "@ant-design/icons";
+import {
+    BlockOutlined,
+    CodeSandboxOutlined,
+    LogoutOutlined, ProfileOutlined, QuestionOutlined,
+    RestOutlined,
+    SearchOutlined,
+    UngroupOutlined
+} from "@ant-design/icons";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {getToken} from "../utils/axiosRequest.ts";
 
 
 function LayoutDashboard() {
@@ -11,8 +19,11 @@ function LayoutDashboard() {
     const {pathname}:{pathname:string} = useLocation()
     enum items {
         "/dashboard" = '1',
-        "/dashboard/tests" = '2',
-        "/dashboard/result" = '3'
+        '/dashboard/tests' = '2',
+        "/dashboard/result" = '3',
+        "/dashboard/questions" = '2',
+        "/dashboard/Collections" = '3',
+        "/dashboard/result-user" = '4'
     }
     const [item, setItem] = useState(items[pathname])
     interface menu {
@@ -22,7 +33,7 @@ function LayoutDashboard() {
         path: string
     }
 
-    const menuList: menu[] = [
+    const menuListForUser: menu[] = [
         {
             id: 1,
             icon: <BlockOutlined style={{fontSize: 30}}/>,
@@ -41,13 +52,42 @@ function LayoutDashboard() {
             path: "result"
         },
 
+    ]
+    const menuListForAdmin: menu[] = [
+        {
+            id: 1,
+            icon: <BlockOutlined style={{fontSize: 30}}/>,
+            label: "Dashboard",
+            path: "/dashboard",
+        },
+        {
+            id: 2,
+            icon: <QuestionOutlined style={{fontSize: 30}}/>,
+            label: "Questions",
+            path: "questions"
+        },
+        {
+            id: 3,
+            icon: <UngroupOutlined style={{fontSize: 30}}/>,
+            label: "Collections",
+            path: "Collections",
+        },
+        {
+            id: 4,
+            icon: <ProfileOutlined style={{fontSize: 30}}/>,
+            label: "Users Result",
+            path: "result-user"
+        },
+
     ];
+    const switcher: menu[] = JSON.parse(localStorage?.getItem('user') || '{}').role_id == 1 ? menuListForAdmin : menuListForUser
+
+
     return (
         <>
 
             <div className="bg-[#FBF9F9] backdrop-blur-xl">
                 <div className="fixed top-0 w-full z-50 !bg-inherit">
-
                     {/*header*/}
                     <div className="flex justify-between items-center px-10 ">
                         <div className="flex items-center gap-28">
@@ -79,7 +119,7 @@ function LayoutDashboard() {
                         className="w-80 flex flex-col justify-between items-center h-screen fixed top-0 -z-50 left-0 pt-16 pb-5">
                         <Menu theme="light" className="pt-20 space-y-2 px-5 !bg-inherit !border-r-0" mode="inline"
                               defaultSelectedKeys={[item]}>
-                            {menuList.map((elem) => {
+                            {switcher.map((elem) => {
                                 return (
                                     <Menu.Item key={elem.id} icon={elem.icon}
                                                className='font-semibold text-xl !py-8 !rounded-[30px] !px-10 flex gap-5 text-[#696F79] mx-20 active:!bg-[#314063] active:!text-white'

@@ -35,11 +35,11 @@ const Test = () => {
         {questionsID: 2, answer: 'Cplusplus', correct: false, id: 6},
         {questionsID: 2, answer: 'plusplusC', correct: false, id: 7},
         {questionsID: 2, answer: 'salom', correct: true, id: 8},
-        {questionsID: 3, answer: 'salom', correct: true, id: 8},
+        {questionsID: 3, answer: 'salom', correct: true, id: 9},
     ]
 
     const pagination = {
-        clickable: true,
+        clickable: false,
         renderBullet: function (index: number, className: string): string {
             return '<p class="' + className + " w-10 h-10 inline-flex flex-col items-center justify-center mt-20 text-xl text-white font-bold " + '">' + (index + 1) + "</p>";
         },
