@@ -13,8 +13,6 @@ import ResultUser from "./pages/ResultUser/ResultUser.tsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.tsx";
 import AuthCheck from "./utils/AuthCheck.ts";
 import ProtectRoute from "./utils/ProtectRoute.ts";
-// import ResultUser from "./pages/ResultUser/ResultUser.tsx";
-// import Test from "./components/Test/Test.tsx";
 
 function App() {
     interface USER {
